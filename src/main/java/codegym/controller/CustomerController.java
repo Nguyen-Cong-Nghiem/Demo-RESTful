@@ -18,25 +18,7 @@ public class CustomerController {
     @Autowired
     private CustomerService customerService;
 
-    @RequestMapping(value = "/customers/", method = RequestMethod.GET)
-    public ResponseEntity<List<Customer>> listAllCustomer() {
-        List<Customer> customers = customerService.findAll();
-        if (customers.isEmpty()) {
-            return new ResponseEntity<List<Customer>>(HttpStatus.NO_CONTENT);
-        }
-        return new ResponseEntity<List<Customer>>(HttpStatus.OK);
-    }
 
-    @RequestMapping(value = "/customer/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Customer> getCustomer(@PathVariable("id") Long id) {
-        System.out.println("Fetching Customer with id: " + id);
-        Customer customer = customerService.findById(id);
-        if (customer == null) {
-            System.out.println("Customer with id " + id + "notfound");
-            return new ResponseEntity<Customer>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<Customer>(HttpStatus.OK);
-    }
 
 //    @RequestMapping(value = "/customer/", method = RequestMethod.POST)
 //    public ResponseEntity<Void> createCustomer(@RequestBody Customer customer, UriComponentsBuilder ucBuilder) {
@@ -46,27 +28,27 @@ public class CustomerController {
 //        headers.setLocation(ucBuilder.path("/customer/{id}"));
 //    }
 
-//    @RequestMapping(value = "/customers/", method = RequestMethod.GET)
-//    public ResponseEntity<List<Customer>> listAllCustomers() {
-//        List<Customer> customers = customerService.findAll();
-//        if (customers.isEmpty()) {
-//            return new ResponseEntity<List<Customer>>(HttpStatus.NO_CONTENT);//You many decide to return HttpStatus.NOT_FOUND
-//        }
-//        return new ResponseEntity<List<Customer>>(customers, HttpStatus.OK);
-//    }
-//
-//    //-------------------Retrieve Single Customer--------------------------------------------------------
-//
-//    @RequestMapping(value = "/customers/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-//    public ResponseEntity<Customer> getCustomer(@PathVariable("id") long id) {
-//        System.out.println("Fetching Customer with id " + id);
-//        Customer customer = customerService.findById(id);
-//        if (customer == null) {
-//            System.out.println("Customer with id " + id + " not found");
-//            return new ResponseEntity<Customer>(HttpStatus.NOT_FOUND);
-//        }
-//        return new ResponseEntity<Customer>(customer, HttpStatus.OK);
-//    }
+    @RequestMapping(value = "/customers/", method = RequestMethod.GET)
+    public ResponseEntity<List<Customer>> listAllCustomers() {
+        List<Customer> customers = customerService.findAll();
+        if (customers.isEmpty()) {
+            return new ResponseEntity<List<Customer>>(HttpStatus.NO_CONTENT);//You many decide to return HttpStatus.NOT_FOUND
+        }
+        return new ResponseEntity<List<Customer>>(customers, HttpStatus.OK);
+    }
+
+    //-------------------Retrieve Single Customer--------------------------------------------------------
+
+    @RequestMapping(value = "/customers/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Customer> getCustomer(@PathVariable("id") long id) {
+        System.out.println("Fetching Customer with id " + id);
+        Customer customer = customerService.findById(id);
+        if (customer == null) {
+            System.out.println("Customer with id " + id + " not found");
+            return new ResponseEntity<Customer>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<Customer>(customer, HttpStatus.OK);
+    }
 
 
 }
